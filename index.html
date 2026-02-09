@@ -20,18 +20,31 @@ body {
 }
 
 /* Responsive App Container */
+/*  */
+
 .app-screen {
     width: 100%;
-    height: 100vh;
+    min-height: 100svh;
     max-width: 900px;
-    background: white;
-    border-radius: 0;
-    box-shadow: none;
-    text-align: center;
-    padding: 40px 20px 140px;
+    margin: auto;
     position: relative;
     overflow: hidden;
+    padding: 40px 20px 140px;
+    text-align: center;
+    color: #fff;
+    display: none; /* hidden until intro tapped */
+    background:
+        linear-gradient(
+            rgba(255, 105, 180, 0.75),
+            rgba(255, 182, 193, 0.75)
+        ),
+        url("./Screenshot\ 2026-02-09\ 185250.png");
+
+    background-size: cover;
+    background-position: center 35%;
+    background-repeat: no-repeat;
 }
+
 
 @media (min-width: 768px) {
     .app-screen {
@@ -41,7 +54,7 @@ body {
     }
 }
 
-h1 {
+/* h1 {
     color: #e60073;
     font-size: clamp(22px, 4vw, 32px);
 }
@@ -49,18 +62,82 @@ h1 {
 .subtext {
     color: #666;
     margin-bottom: 15px;
+} */
+
+h1 {
+    color: white;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+     font-size: clamp(22px, 4vw, 32px);
 }
 
-.bear {
+.subtext {
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+     margin-bottom: 15px;
+}
+
+
+/* .bear {
     width: 160px;
     margin: 10px 0 20px;
     animation: float 3s ease-in-out infinite;
+} */
+/* .bear {
+    width: 170px;
+    margin: 10px 0 20px;
+    animation: float 3s ease-in-out infinite, heartbeat 1.8s ease-in-out infinite;
+    transform-origin: center;
+} */
+
+.bear {
+    width: 170px;
+    margin: 10px 0 20px;
+    position: relative;
+    z-index: 1;
+    animation: float 3s ease-in-out infinite, heartbeat 1.8s ease-in-out infinite;
+    transform-origin: center;
+      pointer-events: none;
+}
+/* .bear {
+    pointer-events: none;
+} */
+
+
+/* Glowing aura */
+.bear::before {
+    content: "";
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(255,105,180,0.5) 0%, rgba(255,105,180,0.2) 40%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+    animation: glowPulse 2.5s ease-in-out infinite;
 }
 
+@keyframes glowPulse {
+    0%,100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+}
+
+
+/* Floating animation */
 @keyframes float {
     0%,100% { transform: translateY(0); }
     50% { transform: translateY(-12px); }
 }
+
+/* Heartbeat pulse */
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.08); }
+    40% { transform: scale(1); }
+    60% { transform: scale(1.08); }
+}
+
+/* @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+} */
 
 /* Buttons */
 .btn {
@@ -72,13 +149,14 @@ h1 {
     cursor: pointer;
     transition: transform 0.15s;
     white-space: nowrap;
+    z-index: 10;
 }
 
 #yesBtn {
     background: #ff4d88;
     color: white;
     left: 50%;
-    bottom: 80px;
+    bottom: 110px;
     transform: translateX(-50%);
 }
 
@@ -86,7 +164,7 @@ h1 {
     background: #eee;
     color: #333;
     left: 50%;
-    bottom: 25px;
+    bottom: 50px;
     transform: translateX(-50%);
 }
 
@@ -113,9 +191,13 @@ h1 {
 @keyframes fall {
     to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
 }
+@keyframes popFloat {
+    0% { transform: scale(0.5) translateY(0); opacity: 1; }
+    100% { transform: scale(1.2) translateY(-80px); opacity: 0; }
+}
 
 /* Love letter */
-.letter {
+/* .letter {
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg, #ff4d88, #ff99cc);
@@ -123,16 +205,127 @@ h1 {
     padding: 30px;
     overflow-y: auto;
     animation: fadeIn 0.8s ease forwards;
+} */
+
+.nameGlow {
+    font-size: 26px;
+    text-shadow: 0 0 8px rgba(255,255,255,0.9),
+                 0 0 18px rgba(255,182,193,0.8),
+                 0 0 28px rgba(255,105,180,0.7);
+    animation: glowText 2.5s ease-in-out infinite alternate;
 }
+
+@keyframes glowText {
+    from { text-shadow: 0 0 6px rgba(255,255,255,0.7); }
+    to   { text-shadow: 0 0 22px rgba(255,105,180,1); }
+}
+
+.letter {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        rgba(255, 77, 136, 0.50),
+        rgba(255, 153, 204, 0.50)
+    ),
+    url("./Screenshot\ 2026-02-09\ 185250.png");   /* Local image from repo */
+
+    background-size: cover;
+    /* background-position: center; */
+    background-position: center 30%;
+
+    background-repeat: no-repeat;
+
+    color: white;
+    padding: 30px;
+    overflow-y: auto;
+    animation: fadeIn 0.8s ease forwards;
+}
+
 @keyframes fadeIn { from {opacity:0} to {opacity:1} }
+
+.intro {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #ffb6d9, #ffd6ec);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    text-align: center;
+    cursor: pointer;
+}
+
+.introText {
+    font-size: 28px;
+    color: #d63384;
+    margin-top: 10px;
+}
+
+.tapHint {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+.dog {
+    font-size: 80px;
+    position: relative;
+    animation: bounceDog 1.8s ease-in-out infinite;
+}
+
+/* Tail wag effect */
+.dog::after {
+    content: "🐾";
+    position: absolute;
+    right: -18px;
+    top: 20px;
+    font-size: 26px;
+    animation: wagTail 0.4s ease-in-out infinite alternate;
+}
+
+@keyframes wagTail {
+    from { transform: rotate(-20deg); }
+    to { transform: rotate(20deg); }
+}
+
+@keyframes bounceDog {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
 </style>
 </head>
 <body>
 
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a73467.mp3?filename=romantic-background-112191.mp3" type="audio/mpeg">
+</audio>
+
+<div id="introScreen" class="intro">
+    <div >
+        <img class="dog" src="./dog.jpg">
+    </div>
+    <h1 class="introText">Hello Rasna! 💖</h1>
+    <p class="tapHint">(Tap anywhere)</p>
+</div>
+
 <div class="app-screen" id="app">
     <h1>Rasna, will you be my Valentine? 💖</h1>
     <div class="subtext">I promise unlimited hugs and forever love 🥺</div>
-    <img class="bear" src="https://media.istockphoto.com/id/1386203924/vector/teddy-bear-with-heart-on-a-hearts-background.jpg?s=1024x1024&w=is&k=20&c=UvLljDMdSa3KeLKQSN_ONVZXwXinVnzcrTgeHcT835Q=">
+    <!-- <img class="bear" src="https://media.istockphoto.com/id/1386203924/vector/teddy-bear-with-heart-on-a-hearts-background.jpg?s=1024x1024&w=is&k=20&c=UvLljDMdSa3KeLKQSN_ONVZXwXinVnzcrTgeHcT835Q="> -->
+    <!-- <img class="bear" src="https://cdn-icons-png.flaticon.com/512/616/616408.png"> -->
+    <!-- <img class="bear" src="https://cdn-icons-png.flaticon.com/512/742/742751.png"> -->
+    <!-- <img class="bear" src="https://cdn-icons-png.flaticon.com/512/3069/3069172.png"> -->
+    <!-- <img class="bear" src="https://cdn-icons-png.flaticon.com/512/833/833472.png"> -->
+     <!-- <img class="bear" src="https://pngimg.com/uploads/teddy_bear/teddy_bear_PNG28.png"> -->
+<!-- <img class="bear" src="https://pngimg.com/uploads/teddy_bear/teddy_bear_PNG45.png"> -->
+<img class="bear" src="./teddy_bear_PNG28.png">
+<!-- <img class="bear" src="https://pngimg.com/uploads/teddy_bear/teddy_bear_PNG7.png"> -->
+
+
+
+
 
     <button id="yesBtn" class="btn">Yes, obviously 😍</button>
     <button id="noBtn" class="btn">No 🙈</button>
@@ -155,6 +348,26 @@ function createHeart() {
     setTimeout(()=>heart.remove(),8000);
 }
 setInterval(createHeart,500);
+
+
+function popLove() {
+    const teddy = document.querySelector(".bear");
+    const rect = teddy.getBoundingClientRect();
+
+    const heart = document.createElement("div");
+    heart.innerHTML = "💖";
+    heart.style.position = "fixed";
+    heart.style.left = rect.left + rect.width/2 + (Math.random()*60 - 30) + "px";
+    heart.style.top = rect.top + rect.height/2 + (Math.random()*40 - 20) + "px";
+    heart.style.fontSize = (14 + Math.random()*10) + "px";
+    heart.style.pointerEvents = "none";
+    heart.style.animation = "popFloat 2s ease-out forwards";
+
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 2000);
+}
+
+setInterval(popLove, 700);
 
 /* Move NO safely */
 function moveNoButton() {
@@ -192,15 +405,72 @@ function launchConfetti(){
         setTimeout(()=>c.remove(),4000);
     }
 }
+const music = document.getElementById("bgMusic");
+
+/* Start music on first interaction */
+function startMusic() {
+    music.volume = 0.25; // soft volume
+    music.play().catch(()=>{});
+    document.removeEventListener("click", startMusic);
+    document.removeEventListener("touchstart", startMusic);
+}
+
+document.addEventListener("click", startMusic);
+document.addEventListener("touchstart", startMusic);
+const intro = document.getElementById("introScreen");
+
+intro.addEventListener("click", () => {
+    intro.style.display = "none";
+    app.style.display = "block";
+});
+
 
 function showLetter(){
     app.innerHTML=`
     <div class="letter">
-        <h2>To My Rasna ❤️</h2>
-        <p>You make my world brighter, my days happier, and my life more meaningful.</p>
-        <p>I don’t just want today with you… I want every tomorrow too.</p>
-        <p>Thank you for being my love, my peace, and my favorite person.</p>
-        <h2>Forever Yours 💍</h2>
+       <h2 class="nameGlow">To My Pasandida ❤️</h2>
+
+           <p class="funnyLine">
+                हाँथी पानी में बह नहीं सकता<br>
+                और मैं आपके बिना रह नहीं सकता ❤️
+           </p>
+
+        <p>
+    You make my world brighter, my days happier, and my life more meaningful in ways I never knew were possible.
+</p>
+
+<p>
+    I don’t just want today with you… I want every tomorrow, every laugh, every little moment that life brings our way.
+</p>
+
+<p>
+    Mujhe nahi pata bebe… main aapse kitna bhi bol lu ki sab theek hai, main busy hoon, strong hoon…  
+    but deep down, I know how much I miss you and how deeply I love you.
+</p>
+
+<p>
+    Bahut baar koshish karta hoon apna mind divert karne ki, kuch aur karne ki…  
+    par sach yeh hai ki mera mann kahin aur lagta hi nahi.  
+    Aap hi mere khayalon mein rehti ho… aap hi meri aankhon ke saamne rehti ho.
+</p>
+
+<p>
+    Aap meri aadat nahi ho… aap meri zarurat ho.  
+    Aur jo feeling dil mein hoti hai na, usko words mein pura kabhi explain nahi kiya ja sakta.
+</p>
+
+<p>
+    Bas ek baat dil se kehna chahta hoon…  
+    Jo bhi ho, jaise bhi ho, I will always respect you, your happiness, and your choices.
+    My feelings for you come from love, not expectations.
+</p>
+
+<p>
+    I just feel lucky that I got to love someone as special as you.
+    Every moment with you is precious to me, and always will be.
+</p>
+
+<h2>Forever Yours, With or Without You 💍</h2>
     </div>`;
 }
 </script>
