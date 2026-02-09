@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Rasna ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #ff9ecf, #ffc3e6);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Floating Hearts */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 18px;
+    animation: floatUp linear forwards;
+    opacity: 0.8;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+
+.app-screen {
+    width: 95%;
+    max-width: 380px;
+    height: 92vh;
+    background: white;
+    border-radius: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    text-align: center;
+    padding: 25px 15px;
+    position: relative;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 22px;
+    color: #e60073;
+}
+
+.subtext {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.bear {
+    width: 140px;
+    margin: 10px 0;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.btn {
+    padding: 12px 20px;
+    font-size: 15px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    position: absolute;
+    transition: 0.2s;
+}
+
+#yesBtn {
+    background: #ff4d88;
+    color: white;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+}
+
+#noBtn {
+    background: #eee;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 8px;
+    height: 8px;
+    top: -10px;
+    animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Love Letter Screen */
+.letter {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #ff4d88, #ff99cc);
+    color: white;
+    padding: 25px;
+    text-align: center;
+    animation: fadeIn 0.8s ease forwards;
+    overflow-y: auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.letter h2 {
+    margin-top: 40px;
+    font-size: 24px;
+}
+
+.letter p {
+    margin-top: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-screen" id="app">
+    <h1>Rasna, will you be my Valentine? 💖</h1>
+    <div class="subtext">I promise unlimited hugs and forever love 🥺</div>
+    <img class="bear" src=" https://media.istockphoto.com/id/1386203924/vector/teddy-bear-with-heart-on-a-hearts-background.jpg?s=1024x1024&w=is&k=20&c=UvLljDMdSa3KeLKQSN_ONVZXwXinVnzcrTgeHcT835Q=">
+    <!-- https://www.istockphoto.com/illustrations/happy-valentines-day-teddy-bear-backgrounds -->
+    <!-- <img class="bear" src="https://i.imgur.com/3Qf6F9k.png"> -->
+    <!-- <img class="bear" src="https://cdn-icons-png.flaticon.com/512/616/616408.png"> -->
+
+
+
+    <button id="yesBtn" class="btn">Yes, obviously 😍</button>
+    <button id="noBtn" class="btn">No 🙈</button>
+</div>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+const app = document.getElementById("app");
+
+/* Floating Hearts Generator */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (16 + Math.random() * 10) + "px";
+    heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+}
+setInterval(createHeart, 500);
+
+function moveNoButton() {
+    const maxX = app.clientWidth - noBtn.offsetWidth;
+    const maxY = app.clientHeight - noBtn.offsetHeight;
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+}
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("click", moveNoButton);
+
+yesBtn.addEventListener("click", () => {
+    launchConfetti();
+    setTimeout(showLetter, 1500);
+});
+
+function launchConfetti() {
+    for (let i = 0; i < 120; i++) {
+        const conf = document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.left = Math.random() * window.innerWidth + "px";
+        conf.style.backgroundColor = ["#ff4d88","#ffd166","#06d6a0","#118ab2","#ef476f"][Math.floor(Math.random()*5)];
+        conf.style.animationDuration = (2 + Math.random() * 2) + "s";
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 4000);
+    }
+}
+
+function showLetter() {
+    app.innerHTML = `
+        <div class="letter">
+            <h2>To My Rasna ❤️</h2>
+            <p>
+                From the moment you came into my life, everything became brighter,
+                warmer, and more meaningful. You are my happiness, my peace,
+                and my favorite person in the world.
+            </p>
+            <p>
+                I don’t just want to be your Valentine for a day…  
+                I want to be yours in every smile, every laugh,
+                every adventure, and every quiet moment.
+            </p>
+            <p>
+                Thank you for being you.  
+                I’m the luckiest person alive because I have you. 💖
+            </p>
+            <h2>Forever Yours 💍</h2>
+        </div>
+    `;
+}
+</script>
+
+</body>
+</html>
